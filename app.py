@@ -19,10 +19,12 @@ def verify_webhook(data, hmac_header):
 
 @app.route('/webhook', methods=['POST'])
 def handle_webhook():
-    print("Request has been recieved !", flush=True)
-    print("header:", request.headers, flush=True)
 
     data = request.get_data()
+    print("Request has been recieved !", flush=True)
+    print("header:", request.headers, flush=True)
+    print("Request body:", data, flush=True)
+
     verified = verify_webhook(data, request.headers.get('X-Shopify-Hmac-SHA256'))
     if not verified:
         abort(401)
