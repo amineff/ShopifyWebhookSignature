@@ -27,14 +27,12 @@ def handle_webhook():
 
     verified = verify_webhook(data, request.headers.get('X-Shopify-Hmac-SHA256'))
     if not verified:
+        print("Request failed !", flush=True)
         abort(401)
 
     # Process webhook payload
     # ...
     print("Request has been validated !", flush=True)
-    print("X-Shopify-Hmac-SHA256:", request.headers.get('X-Shopify-Hmac-SHA256'), flush=True)
-    print("Request body:", data, flush=True)
-
     return ('', 200)
 
 if __name__ == '__main__':
