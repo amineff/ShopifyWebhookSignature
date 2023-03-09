@@ -20,6 +20,8 @@ def verify_webhook(data, hmac_header):
 @app.route('/webhook', methods=['POST'])
 def handle_webhook():
     print("Request has been recieved !", flush=True)
+    print("header:", request.headers, flush=True)
+
     data = request.get_data()
     verified = verify_webhook(data, request.headers.get('X-Shopify-Hmac-SHA256'))
     if not verified:
@@ -27,6 +29,10 @@ def handle_webhook():
 
     # Process webhook payload
     # ...
+    print("Request has been validated !", flush=True)
+    print("X-Shopify-Hmac-SHA256:", request.headers.get('X-Shopify-Hmac-SHA256'), flush=True)
+    print("Request body:", data, flush=True)
+
     return ('', 200)
 
 if __name__ == '__main__':
